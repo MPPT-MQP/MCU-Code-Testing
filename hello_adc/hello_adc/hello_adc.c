@@ -8,6 +8,12 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
+#include <math.h>
+
+
+#define tmp_offset 0.5
+#define tmp_scaling 10 * pow(10, -3)
+
 
 int main() {
     stdio_init_all();
@@ -23,8 +29,14 @@ int main() {
     while (1) {
         // 12-bit conversion, assume max value == ADC_VREF == 3.3 V
         const float conversion_factor = 3.3f / (1 << 12);
+
+        
+        // ADC reading of raw input
         uint16_t result = adc_read();
-        printf("Raw value: 0x%03x, voltage: %f V\n", result, result * conversion_factor);
+        
+
+        // voltage = result * 3.3 / 4095, temperature = (voltage - offset) / scaling -> offset = 0.5 Volts & scaling = 0.1 mV/Celsius
+        printf("Raw value: 0x%03x, voltage: %f V, temperature: %f\n", result, result * conversion_factor, ((result * conversion_factor) - tmp_offset) / tmp_scaling );
         sleep_ms(500); 
     }
 }
