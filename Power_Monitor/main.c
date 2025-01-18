@@ -41,7 +41,7 @@ int main()
         voltage = INA740_getVBUS_V(INA740_0); 
         power = INA740_getPOWER_W(INA740_0);
 
-        printf("Current: %0.2f, Voltage: %0.2f, Power: %0.2f\n", current, voltage, power);
+        printf("Current: %0.4f, Voltage: %0.4f, Power: %0.4f\n", current, voltage, power);
         sleep_ms(1000);
     }
 }

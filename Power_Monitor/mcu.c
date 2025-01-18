@@ -18,8 +18,8 @@
 // I2C defines
 // This example will use I2C0 on GPIO8 (SDA) and GPIO9 (SCL) running at 400KHz.
 // Pins can be changed, see the GPIO function select table in the datasheet for information on GPIO assignments
-#define I2C_SDA 26
-#define I2C_SCL 27
+#define I2C_SDA 4
+#define I2C_SCL 5
 
 /*
  *  Include MCU Specific Header Files Here
@@ -30,7 +30,7 @@
 void mcu_i2cInit(uint8_t busId)
 {
     /* Add MCU specific init necessary for I2C to be used */
-    i2c_init(i2c1, 400*1000);
+    i2c_init(i2c0, 400*1000);
     
     gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
     gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
@@ -46,9 +46,11 @@ int8_t mcu_i2cTransfer( uint8_t busId, uint8_t i2cAddr,
      *  Add MCU specific I2C read/write code here.
      */
     if(dataToWrite){
-        i2c_write_blocking(i2c1, i2cAddr, dataToWrite, writeLength, false);
-    } else {
-        i2c_read_blocking(i2c1, i2cAddr, dataToRead, readLength, false);
+        i2c_write_blocking(i2c0, i2cAddr, dataToWrite, writeLength, true);
+    } 
+    
+    if (dataToRead){
+        i2c_read_blocking(i2c0, i2cAddr, dataToRead, readLength, false);
      }
     /*
      *  Add MCU specific return code for error handling

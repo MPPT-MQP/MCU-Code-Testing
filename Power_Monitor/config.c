@@ -42,7 +42,7 @@ static INA740_State INA740_0_state = {
 
 
     /* Sensor's I2C bus ID and address */
-    .busId = 1,
+    .busId = 0,
     .devAddr = 0x40U,
 
 };
