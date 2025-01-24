@@ -166,7 +166,9 @@ float INA740_getDIETEMP_F(INA740_Handle sensor)
  */
 float INA740_getCURRENT_A(INA740_Handle sensor)
 {
-    uint64_t value = INA740_readReg(sensor, INA740_current_register);
+    
+    //uint64_t value = INA740_readReg(sensor, INA740_current_register);
+    uint16_t value = INA740_readReg(sensor, INA740_current_register);
     float data;
 
     //Convert for 2's compliment and signed value 
@@ -178,6 +180,8 @@ float INA740_getCURRENT_A(INA740_Handle sensor)
     {
         data = (float)value;
     }
+
+    //data = (float)value; // temporary test
 
     data = data * 1.2 / 1000;
 
